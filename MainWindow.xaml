@@ -1,0 +1,74 @@
+﻿<Window
+    x:Class="WpfButtonIcon.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="clr-namespace:WpfButtonIcon.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfButtonIcon"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:zex="clr-namespace:ControlzEx.Controls;assembly=ControlzEx"
+    Title="WpfButtonIcon"
+    Width="400"
+    Height="300"
+    d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
+    ResizeMode="CanResizeWithGrip"
+    mc:Ignorable="d">
+
+    <Window.DataContext>
+        <local:MainWindowViewModel />
+    </Window.DataContext>
+
+    <DockPanel>
+        <TextBlock
+            Margin="5"
+            DockPanel.Dock="Top"
+            FontSize="16"
+            Text="{Binding Message}" />
+
+        <zex:TabControlEx>
+            <TabItem Header="Buttons">
+                <ItemsControl ItemsSource="{Binding Icons}">
+                    <ItemsControl.Resources>
+                        <Style TargetType="{x:Type ctrls:IconButton}">
+                            <Setter Property="Command" Value="{Binding DataContext.SingleClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
+                            <Setter Property="CommandParameter" Value="{Binding Kind, RelativeSource={RelativeSource Self}}" />
+                            <Setter Property="DoubleClickCommand" Value="{Binding DataContext.DoubleClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
+                            <Setter Property="EnableBrush" Value="Crimson" />
+                            <Setter Property="DisableBrush" Value="DarkGray" />
+                        </Style>
+                    </ItemsControl.Resources>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ctrls:IconButton Kind="{Binding .}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </TabItem>
+
+            <!--  All icons  -->
+            <TabItem Header="Icons">
+                <ItemsControl ItemsSource="{Binding Icons}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ctrls:PackIcon Kind="{Binding .}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </TabItem>
+        </zex:TabControlEx>
+    </DockPanel>
+
+</Window>
