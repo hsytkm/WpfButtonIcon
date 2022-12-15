@@ -27,6 +27,17 @@ public sealed class IconButton : ButtonBase
     }
 
     /// <summary>
+    /// DisableBrush
+    /// </summary>
+    public static readonly DependencyProperty DisableBrushProperty =
+        DependencyProperty.Register(nameof(DisableBrush), typeof(Brush), typeof(IconButton), new PropertyMetadata(Brushes.Red));
+    public Brush DisableBrush
+    {
+        get => (Brush)GetValue(DisableBrushProperty);
+        set => SetValue(DisableBrushProperty, value);
+    }
+
+    /// <summary>
     /// EnableBrush
     /// </summary>
     public static readonly DependencyProperty EnableBrushProperty =
@@ -38,14 +49,14 @@ public sealed class IconButton : ButtonBase
     }
 
     /// <summary>
-    /// DisableBrush
+    /// MouseOverBrush
     /// </summary>
-    public static readonly DependencyProperty DisableBrushProperty =
-        DependencyProperty.Register(nameof(DisableBrush), typeof(Brush), typeof(IconButton), new PropertyMetadata(Brushes.Red));
-    public Brush DisableBrush
+    public static readonly DependencyProperty MouseOverBrushProperty =
+        DependencyProperty.Register(nameof(MouseOverBrush), typeof(Brush), typeof(IconButton), new PropertyMetadata(Brushes.Green));
+    public Brush MouseOverBrush
     {
-        get => (Brush)GetValue(DisableBrushProperty);
-        set => SetValue(DisableBrushProperty, value);
+        get => (Brush)GetValue(MouseOverBrushProperty);
+        set => SetValue(MouseOverBrushProperty, value);
     }
 
     /// <summary>
@@ -66,5 +77,4 @@ public sealed class IconButton : ButtonBase
         get => (ICommand?)GetValue(DoubleClickCommandProperty);
         set => SetValue(DoubleClickCommandProperty, value);
     }
-
 }

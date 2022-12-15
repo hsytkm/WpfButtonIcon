@@ -4,7 +4,7 @@
     xmlns:ctrls="clr-namespace:WpfButtonIcon.Controls"
     xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
-    <Storyboard x:Key="MyButtonStoryboardMouseEnter">
+    <!--<Storyboard x:Key="MyButtonStoryboardMouseEnter">
         <ColorAnimation
             options:Freeze="True"
             FillBehavior="Stop"
@@ -22,7 +22,7 @@
             From="{Binding EnableBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ButtonBase}}}"
             To="{Binding DisableBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ButtonBase}}}"
             Duration="0:0:0.6" />
-    </Storyboard>
+    </Storyboard>-->
 
     <Style TargetType="{x:Type ctrls:IconButton}">
         <Setter Property="Template">
@@ -39,14 +39,18 @@
                         </EventTrigger>-->
 
                         <Trigger Property="ButtonBase.IsMouseOver" Value="False">
-                            <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding DisableBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding EnableBrush, RelativeSource={RelativeSource TemplatedParent}}" />
                             <Setter TargetName="PART_Icon" Property="Opacity" Value="1" />
                         </Trigger>
                         <Trigger Property="ButtonBase.IsMouseOver" Value="True">
-                            <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding EnableBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <Setter TargetName="PART_Icon" Property="Opacity" Value="0.8" />
+                            <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding MouseOverBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Setter TargetName="PART_Icon" Property="Opacity" Value="0.7" />
                         </Trigger>
                         <Trigger Property="ButtonBase.IsPressed" Value="True">
+                            <Setter TargetName="PART_Icon" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="ButtonBase.IsEnabled" Value="False">
+                            <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding DisableBrush, RelativeSource={RelativeSource TemplatedParent}}" />
                             <Setter TargetName="PART_Icon" Property="Opacity" Value="1" />
                         </Trigger>
                     </ControlTemplate.Triggers>

@@ -19,11 +19,14 @@
     </Window.DataContext>
 
     <DockPanel>
-        <TextBlock
-            Margin="5"
-            DockPanel.Dock="Top"
-            FontSize="16"
-            Text="{Binding Message}" />
+        <DockPanel Margin="5" DockPanel.Dock="Top">
+            <CheckBox
+                VerticalContentAlignment="Center"
+                Content="Button.IsEnable"
+                DockPanel.Dock="Right"
+                IsChecked="{Binding EnableButton, Mode=TwoWay}" />
+            <TextBlock Text="{Binding Message}" TextBlock.FontSize="16" />
+        </DockPanel>
 
         <zex:TabControlEx>
             <TabItem Header="Buttons">
@@ -33,14 +36,15 @@
                             <Setter Property="Command" Value="{Binding DataContext.SingleClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
                             <Setter Property="CommandParameter" Value="{Binding Kind, RelativeSource={RelativeSource Self}}" />
                             <Setter Property="DoubleClickCommand" Value="{Binding DataContext.DoubleClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
-                            <Setter Property="EnableBrush" Value="Crimson" />
-                            <Setter Property="DisableBrush" Value="DarkGray" />
+                            <Setter Property="DisableBrush" Value="LightGray" />
+                            <Setter Property="EnableBrush" Value="DarkGray" />
+                            <Setter Property="MouseOverBrush" Value="Crimson" />
                         </Style>
                     </ItemsControl.Resources>
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <ctrls:IconButton Kind="{Binding .}" />
+                            <ctrls:IconButton IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Kind="{Binding .}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
