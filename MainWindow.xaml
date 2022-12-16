@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:zex="clr-namespace:ControlzEx.Controls;assembly=ControlzEx"
     Title="WpfButtonIcon"
-    Width="400"
+    Width="500"
     Height="300"
     d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
     ResizeMode="CanResizeWithGrip"
