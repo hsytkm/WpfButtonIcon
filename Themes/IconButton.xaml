@@ -40,18 +40,15 @@
 
                         <Trigger Property="ButtonBase.IsMouseOver" Value="False">
                             <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding EnableBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <Setter TargetName="PART_Icon" Property="Opacity" Value="1" />
                         </Trigger>
                         <Trigger Property="ButtonBase.IsMouseOver" Value="True">
                             <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding MouseOverBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <Setter TargetName="PART_Icon" Property="Opacity" Value="0.7" />
                         </Trigger>
                         <Trigger Property="ButtonBase.IsPressed" Value="True">
-                            <Setter TargetName="PART_Icon" Property="Opacity" Value="1" />
+                            <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding PressBrush, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         <Trigger Property="ButtonBase.IsEnabled" Value="False">
                             <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding DisableBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <Setter TargetName="PART_Icon" Property="Opacity" Value="1" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

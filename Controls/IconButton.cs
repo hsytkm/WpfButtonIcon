@@ -7,6 +7,8 @@ namespace WpfButtonIcon.Controls;
 
 public sealed class IconButton : ButtonBase
 {
+    const float OpacityRatio = 0.7f;
+
     static IconButton()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(IconButton), new FrameworkPropertyMetadata(typeof(IconButton)));
@@ -49,14 +51,42 @@ public sealed class IconButton : ButtonBase
     }
 
     /// <summary>
-    /// MouseOverBrush
+    /// PressBrush
     /// </summary>
-    public static readonly DependencyProperty MouseOverBrushProperty =
-        DependencyProperty.Register(nameof(MouseOverBrush), typeof(Brush), typeof(IconButton), new PropertyMetadata(Brushes.Green));
+    public static readonly DependencyProperty PressBrushProperty =
+        DependencyProperty.Register(nameof(PressBrush), typeof(Brush), typeof(IconButton),
+            new UIPropertyMetadata(Brushes.Green, (d, e) => ((IconButton)d).OnPressBrushPropertyChanged(e.NewValue)));
+    public Brush PressBrush
+    {
+        get => (Brush)GetValue(PressBrushProperty);
+        set => SetValue(PressBrushProperty, value);
+    }
+    void OnPressBrushPropertyChanged(object newValue)
+    {
+        if (newValue is not SolidColorBrush brush)
+            return;
+
+        SolidColorBrush mouseOverBrush = new(new Color()
+        {
+            A = (byte)(brush.Color.A * OpacityRatio),
+            R = brush.Color.R,
+            G = brush.Color.G,
+            B = brush.Color.B,
+        });
+        mouseOverBrush.Freeze();
+        MouseOverBrush = mouseOverBrush;
+    }
+
+    /// <summary>
+    /// MouseOver (ReadOnlyDependencyProperty)
+    /// </summary>
+    private static readonly DependencyPropertyKey MouseOverBrushPropertyKey =
+        DependencyProperty.RegisterReadOnly(nameof(MouseOverBrush), typeof(Brush), typeof(IconButton), new PropertyMetadata(Brushes.Yellow));
+    public static readonly DependencyProperty MouseOverBrushProperty = MouseOverBrushPropertyKey.DependencyProperty;
     public Brush MouseOverBrush
     {
         get => (Brush)GetValue(MouseOverBrushProperty);
-        set => SetValue(MouseOverBrushProperty, value);
+        private set => SetValue(MouseOverBrushPropertyKey, value);
     }
 
     /// <summary>

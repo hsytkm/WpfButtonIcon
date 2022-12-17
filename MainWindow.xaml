@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WpfButtonIcon"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
     xmlns:zex="clr-namespace:ControlzEx.Controls;assembly=ControlzEx"
     Title="WpfButtonIcon"
     Width="500"
@@ -17,6 +18,25 @@
     <Window.DataContext>
         <local:MainWindowViewModel />
     </Window.DataContext>
+
+    <Window.Resources>
+        <Style TargetType="{x:Type ctrls:PackIcon}">
+            <Setter Property="Width" Value="32" />
+            <Setter Property="Height" Value="32" />
+        </Style>
+        <SolidColorBrush
+            x:Key="ButtonDisableBrush"
+            options:Freeze="True"
+            Color="LightGray" />
+        <SolidColorBrush
+            x:Key="ButtonEnableBrush"
+            options:Freeze="True"
+            Color="DarkGray" />
+        <SolidColorBrush
+            x:Key="ButtonPressBrush"
+            options:Freeze="True"
+            Color="Crimson" />
+    </Window.Resources>
 
     <DockPanel>
         <DockPanel Margin="5" DockPanel.Dock="Top">
@@ -36,9 +56,9 @@
                             <Setter Property="Command" Value="{Binding DataContext.SingleClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
                             <Setter Property="CommandParameter" Value="{Binding Kind, RelativeSource={RelativeSource Self}}" />
                             <Setter Property="DoubleClickCommand" Value="{Binding DataContext.DoubleClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
-                            <Setter Property="DisableBrush" Value="LightGray" />
-                            <Setter Property="EnableBrush" Value="DarkGray" />
-                            <Setter Property="MouseOverBrush" Value="Crimson" />
+                            <Setter Property="DisableBrush" Value="{StaticResource ButtonDisableBrush}" />
+                            <Setter Property="EnableBrush" Value="{StaticResource ButtonEnableBrush}" />
+                            <Setter Property="PressBrush" Value="{StaticResource ButtonPressBrush}" />
                         </Style>
                     </ItemsControl.Resources>
 
