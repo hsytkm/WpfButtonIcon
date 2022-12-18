@@ -25,15 +25,15 @@
             <Setter Property="Height" Value="32" />
         </Style>
         <SolidColorBrush
-            x:Key="ButtonDisableBrush"
+            x:Key="ButtonInactiveBrush"
             options:Freeze="True"
             Color="LightGray" />
         <SolidColorBrush
-            x:Key="ButtonEnableBrush"
+            x:Key="ButtonActiveBrush"
             options:Freeze="True"
             Color="DarkGray" />
         <SolidColorBrush
-            x:Key="ButtonPressBrush"
+            x:Key="ButtonClickBrush"
             options:Freeze="True"
             Color="Crimson" />
     </Window.Resources>
@@ -56,9 +56,10 @@
                             <Setter Property="Command" Value="{Binding DataContext.SingleClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
                             <Setter Property="CommandParameter" Value="{Binding Kind, RelativeSource={RelativeSource Self}}" />
                             <Setter Property="DoubleClickCommand" Value="{Binding DataContext.DoubleClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
-                            <Setter Property="DisableBrush" Value="{StaticResource ButtonDisableBrush}" />
-                            <Setter Property="EnableBrush" Value="{StaticResource ButtonEnableBrush}" />
-                            <Setter Property="PressBrush" Value="{StaticResource ButtonPressBrush}" />
+                            <Setter Property="InactiveBrush" Value="{StaticResource ButtonInactiveBrush}" />
+                            <Setter Property="ActiveBrush" Value="{StaticResource ButtonActiveBrush}" />
+                            <Setter Property="ClickBrush" Value="{StaticResource ButtonClickBrush}" />
+                            <Setter Property="OpacityRatio" Value="0.7" />
                         </Style>
                     </ItemsControl.Resources>
 

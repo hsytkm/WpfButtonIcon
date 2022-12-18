@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -7,7 +8,7 @@ namespace WpfButtonIcon.Controls;
 
 public sealed class IconButton : ButtonBase
 {
-    const float OpacityRatio = 0.7f;
+    const float DefaultOpacityRatio = 0.7f;
 
     static IconButton()
     {
@@ -29,64 +30,83 @@ public sealed class IconButton : ButtonBase
     }
 
     /// <summary>
-    /// DisableBrush
+    /// InactiveBrush
     /// </summary>
-    public static readonly DependencyProperty DisableBrushProperty =
-        DependencyProperty.Register(nameof(DisableBrush), typeof(Brush), typeof(IconButton), new PropertyMetadata(Brushes.Red));
-    public Brush DisableBrush
+    public static readonly DependencyProperty InactiveBrushProperty =
+        DependencyProperty.Register(nameof(InactiveBrush), typeof(Brush), typeof(IconButton), new PropertyMetadata(Brushes.Red));
+    public Brush InactiveBrush
     {
-        get => (Brush)GetValue(DisableBrushProperty);
-        set => SetValue(DisableBrushProperty, value);
+        get => (Brush)GetValue(InactiveBrushProperty);
+        set => SetValue(InactiveBrushProperty, value);
     }
 
     /// <summary>
-    /// EnableBrush
+    /// ActiveBrush
     /// </summary>
-    public static readonly DependencyProperty EnableBrushProperty =
-        DependencyProperty.Register(nameof(EnableBrush), typeof(Brush), typeof(IconButton), new PropertyMetadata(Brushes.Blue));
-    public Brush EnableBrush
+    public static readonly DependencyProperty ActiveBrushProperty =
+        DependencyProperty.Register(nameof(ActiveBrush), typeof(Brush), typeof(IconButton), new PropertyMetadata(Brushes.Blue));
+    public Brush ActiveBrush
     {
-        get => (Brush)GetValue(EnableBrushProperty);
-        set => SetValue(EnableBrushProperty, value);
+        get => (Brush)GetValue(ActiveBrushProperty);
+        set => SetValue(ActiveBrushProperty, value);
     }
 
     /// <summary>
-    /// PressBrush
+    /// ClickBrush
     /// </summary>
-    public static readonly DependencyProperty PressBrushProperty =
-        DependencyProperty.Register(nameof(PressBrush), typeof(Brush), typeof(IconButton),
-            new UIPropertyMetadata(Brushes.Green, (d, e) => ((IconButton)d).OnPressBrushPropertyChanged(e.NewValue)));
-    public Brush PressBrush
+    public static readonly DependencyProperty ClickBrushProperty =
+        DependencyProperty.Register(nameof(ClickBrush), typeof(Brush), typeof(IconButton),
+            new UIPropertyMetadata(Brushes.Green,
+                static (d, e) =>
+                {
+                    if (d is IconButton self && e.NewValue is SolidColorBrush brush)
+                        UpdateMouseOverColor(self, brush.Color, self.OpacityRatio);
+                }));
+    public Brush ClickBrush
     {
-        get => (Brush)GetValue(PressBrushProperty);
-        set => SetValue(PressBrushProperty, value);
+        get => (Brush)GetValue(ClickBrushProperty);
+        set => SetValue(ClickBrushProperty, value);
     }
-    void OnPressBrushPropertyChanged(object newValue)
-    {
-        if (newValue is not SolidColorBrush brush)
-            return;
 
-        SolidColorBrush mouseOverBrush = new(new Color()
+    /// <summary>
+    /// OpacityRatio
+    /// </summary>
+    public static readonly DependencyProperty OpacityRatioProperty =
+        DependencyProperty.Register(nameof(OpacityRatio), typeof(float), typeof(IconButton),
+            new FrameworkPropertyMetadata(DefaultOpacityRatio,
+                static (d, e) =>
+                {
+                    if (d is IconButton self && self.ClickBrush is SolidColorBrush brush && e.NewValue is float opacityRatio)
+                        UpdateMouseOverColor(self, brush.Color, opacityRatio);
+                }));
+    public float OpacityRatio
+
+    {
+        get => (float)GetValue(OpacityRatioProperty);
+        set => SetValue(OpacityRatioProperty, value);
+    }
+
+    /// <summary>
+    /// MouseOverColor (ReadOnlyDependencyProperty)
+    /// </summary>
+    private static readonly DependencyPropertyKey MouseOverColorPropertyKey =
+        DependencyProperty.RegisterReadOnly(nameof(MouseOverColor), typeof(Color), typeof(IconButton), new PropertyMetadata(Colors.Yellow));
+    public static readonly DependencyProperty MouseOverColorProperty = MouseOverColorPropertyKey.DependencyProperty;
+    public Color MouseOverColor
+    {
+        get => (Color)GetValue(MouseOverColorProperty);
+        private set => SetValue(MouseOverColorPropertyKey, value);
+    }
+    static void UpdateMouseOverColor(IconButton self, Color color, float opacityRatio)
+    {
+        Color mouseOverColor = new()
         {
-            A = (byte)(brush.Color.A * OpacityRatio),
-            R = brush.Color.R,
-            G = brush.Color.G,
-            B = brush.Color.B,
-        });
-        mouseOverBrush.Freeze();
-        MouseOverBrush = mouseOverBrush;
-    }
-
-    /// <summary>
-    /// MouseOver (ReadOnlyDependencyProperty)
-    /// </summary>
-    private static readonly DependencyPropertyKey MouseOverBrushPropertyKey =
-        DependencyProperty.RegisterReadOnly(nameof(MouseOverBrush), typeof(Brush), typeof(IconButton), new PropertyMetadata(Brushes.Yellow));
-    public static readonly DependencyProperty MouseOverBrushProperty = MouseOverBrushPropertyKey.DependencyProperty;
-    public Brush MouseOverBrush
-    {
-        get => (Brush)GetValue(MouseOverBrushProperty);
-        private set => SetValue(MouseOverBrushPropertyKey, value);
+            A = (byte)Math.Clamp(color.A * opacityRatio, 0, 0xff),
+            R = color.R,
+            G = color.G,
+            B = color.B,
+        };
+        self.MouseOverColor = mouseOverColor;
     }
 
     /// <summary>

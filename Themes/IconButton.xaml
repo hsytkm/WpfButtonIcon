@@ -4,51 +4,51 @@
     xmlns:ctrls="clr-namespace:WpfButtonIcon.Controls"
     xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
-    <!--<Storyboard x:Key="MyButtonStoryboardMouseEnter">
-        <ColorAnimation
-            options:Freeze="True"
-            FillBehavior="Stop"
-            Storyboard.TargetProperty="(ButtonBase.Foreground).(SolidColorBrush)"
-            From="{Binding DisableBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ButtonBase}}}"
-            To="{Binding EnableBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ButtonBase}}}"
-            Duration="0:0:0.3" />
-    </Storyboard>
-
-    <Storyboard x:Key="MyButtonStoryboardMouseLeave">
-        <ColorAnimation
-            options:Freeze="True"
-            FillBehavior="Stop"
-            Storyboard.TargetProperty="(ButtonBase.Foreground).(SolidColorBrush)"
-            From="{Binding EnableBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ButtonBase}}}"
-            To="{Binding DisableBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ButtonBase}}}"
-            Duration="0:0:0.6" />
-    </Storyboard>-->
-
     <Style TargetType="{x:Type ctrls:IconButton}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ctrls:IconButton}">
-                    <ctrls:PackIcon x:Name="PART_Icon" Kind="{Binding Kind, RelativeSource={RelativeSource TemplatedParent}}" />
+                    <ctrls:PackIcon x:Name="PART_Icon" Kind="{Binding Kind, RelativeSource={RelativeSource TemplatedParent}}">
+                        <ctrls:PackIcon.Foreground>
+                            <SolidColorBrush x:Name="PART_IconForeground" Color="{Binding ActiveBrush.Color, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </ctrls:PackIcon.Foreground>
+
+                        <ctrls:PackIcon.Triggers>
+                            <EventTrigger RoutedEvent="ButtonBase.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard options:Freeze="True">
+                                        <ColorAnimation
+                                            options:Freeze="True"
+                                            FillBehavior="HoldEnd"
+                                            Storyboard.TargetName="PART_IconForeground"
+                                            Storyboard.TargetProperty="Color"
+                                            To="{Binding MouseOverColor, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="ButtonBase.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard options:Freeze="True">
+                                        <ColorAnimation
+                                            options:Freeze="True"
+                                            FillBehavior="HoldEnd"
+                                            Storyboard.TargetName="PART_IconForeground"
+                                            Storyboard.TargetProperty="Color"
+                                            To="{Binding ActiveBrush.Color, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ctrls:PackIcon.Triggers>
+                    </ctrls:PackIcon>
 
                     <ControlTemplate.Triggers>
-                        <!--<EventTrigger RoutedEvent="ButtonBase.MouseEnter">
-                            <BeginStoryboard Storyboard="{StaticResource MyButtonStoryboardMouseEnter}" />
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="ButtonBase.MouseLeave">
-                            <BeginStoryboard Storyboard="{StaticResource MyButtonStoryboardMouseLeave}" />
-                        </EventTrigger>-->
-
-                        <Trigger Property="ButtonBase.IsMouseOver" Value="False">
-                            <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding EnableBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding ClickBrush, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
-                        <Trigger Property="ButtonBase.IsMouseOver" Value="True">
-                            <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding MouseOverBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-                        </Trigger>
-                        <Trigger Property="ButtonBase.IsPressed" Value="True">
-                            <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding PressBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-                        </Trigger>
-                        <Trigger Property="ButtonBase.IsEnabled" Value="False">
-                            <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding DisableBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding InactiveBrush, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
