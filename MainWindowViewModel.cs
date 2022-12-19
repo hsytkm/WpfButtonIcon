@@ -23,7 +23,9 @@ internal class MainWindowViewModel : INotifyPropertyChanged
 
     public IReadOnlyList<object> Icons { get; } = Enum.GetValues(typeof(PackIconKind)).OfType<object>().ToArray();
 
-    public ICommand SingleClickCommand => _singleClickCommand ??= new MyCommand<object>(x => Message = $"Clicked {x}");
+    int _counter;
+
+    public ICommand SingleClickCommand => _singleClickCommand ??= new MyCommand<object>(x => Message = $"Clicked({_counter++}) {x}.");
     ICommand? _singleClickCommand;
 
     public string Message
@@ -44,6 +46,6 @@ internal class MainWindowViewModel : INotifyPropertyChanged
     }
     bool _enableButton = true;
 
-    public ICommand DoubleClickCommand => _doubleClickCommand ??= new MyCommand(() => Message = "Double click");
+    public ICommand DoubleClickCommand => _doubleClickCommand ??= new MyCommand(() => Message = $"Double click({_counter++}).");
     ICommand? _doubleClickCommand;
 }

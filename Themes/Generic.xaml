@@ -4,8 +4,9 @@
     xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/WpfButtonIcon;component/Themes/PackIcon.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfButtonIcon;component/Themes/IconButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfButtonIcon;component/Themes/PackIcon.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfButtonIcon;component/Themes/RepeatIconButton.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
