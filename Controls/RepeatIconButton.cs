@@ -7,7 +7,7 @@ namespace WpfButtonIcon.Controls;
 
 public sealed class RepeatIconButton : RepeatButton
 {
-    const float DefaultOpacityRatio = IconButton.DefaultOpacityRatio;
+    const float DefaultOpacityRatio = IconButtonUtils.DefaultOpacityRatio;
 
     static RepeatIconButton()
     {
@@ -59,7 +59,7 @@ public sealed class RepeatIconButton : RepeatButton
                 static (d, e) =>
                 {
                     if (d is RepeatIconButton self && e.NewValue is SolidColorBrush brush)
-                        self.MouseOverColor = GetMouseOverColor(brush.Color, self.OpacityRatio);
+                        self.MouseOverColor = IconButtonUtils.GetMouseOverColor(brush.Color, self.OpacityRatio);
                 }));
     public SolidColorBrush ClickBrush
     {
@@ -76,7 +76,7 @@ public sealed class RepeatIconButton : RepeatButton
                 static (d, e) =>
                 {
                     if (d is RepeatIconButton self && e.NewValue is float opacityRatio)
-                        self.MouseOverColor = GetMouseOverColor(self.ClickBrush.Color, opacityRatio);
+                        self.MouseOverColor = IconButtonUtils.GetMouseOverColor(self.ClickBrush.Color, opacityRatio);
                 }));
     public float OpacityRatio
 
@@ -96,11 +96,4 @@ public sealed class RepeatIconButton : RepeatButton
         get => (Color)GetValue(MouseOverColorProperty);
         private set => SetValue(MouseOverColorPropertyKey, value);
     }
-    static Color GetMouseOverColor(Color color, float opacityRatio) => new()
-    {
-        A = (byte)Math.Clamp(color.A * opacityRatio, 0, 0xff),
-        R = color.R,
-        G = color.G,
-        B = color.B,
-    };
 }

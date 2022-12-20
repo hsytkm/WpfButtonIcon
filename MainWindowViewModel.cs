@@ -21,8 +21,9 @@ internal class MainWindowViewModel : INotifyPropertyChanged
         return true;
     }
 
-    public IReadOnlyList<object> Icons { get; } = Enum.GetValues(typeof(PackIconKind)).OfType<object>().ToArray();
-
+    public IReadOnlyList<PackIconKind> Icons { get; } = Enum.GetValues(typeof(PackIconKind)).OfType<PackIconKind>().ToArray();
+    public IReadOnlyList<PackIconKindPair> IconPairs { get; } = Enum.GetValues(typeof(PackIconKindPair)).OfType<PackIconKindPair>().ToArray();
+    
     int _counter;
 
     public ICommand SingleClickCommand => _singleClickCommand ??= new MyCommand<object>(x => Message = $"Clicked({_counter++}) {x}.");
