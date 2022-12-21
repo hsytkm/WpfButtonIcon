@@ -4,10 +4,10 @@
     xmlns:ctrls="clr-namespace:WpfButtonIcon.Controls"
     xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
-    <Style TargetType="{x:Type ctrls:ToggleIconButton}">
+    <Style TargetType="{x:Type ctrls:IconCheckBox}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ctrls:ToggleIconButton}">
+                <ControlTemplate TargetType="{x:Type ctrls:IconCheckBox}">
                     <ctrls:PackIcon x:Name="PART_Icon" Kind="{Binding Kind, RelativeSource={RelativeSource TemplatedParent}}">
                         <Control.Foreground>
                             <SolidColorBrush x:Name="PART_IconForeground" Color="{Binding ActiveBrush.Color, RelativeSource={RelativeSource TemplatedParent}}" />
@@ -45,6 +45,9 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding ClickBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="PART_Icon" Property="Foreground" Value="{Binding ClickBrush, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">

@@ -1,7 +1,8 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfButtonIcon;component/Themes/IconButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfButtonIcon;component/Themes/IconCheckBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfButtonIcon;component/Themes/PackIcon.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfButtonIcon;component/Themes/RepeatIconButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfButtonIcon;component/Themes/ToggleIconButton.xaml" />

@@ -9,12 +9,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ctrls:IconButton}">
                     <ctrls:PackIcon x:Name="PART_Icon" Kind="{Binding Kind, RelativeSource={RelativeSource TemplatedParent}}">
-                        <ctrls:PackIcon.Foreground>
+                        <Control.Foreground>
                             <SolidColorBrush x:Name="PART_IconForeground" Color="{Binding ActiveBrush.Color, RelativeSource={RelativeSource TemplatedParent}}" />
-                        </ctrls:PackIcon.Foreground>
+                        </Control.Foreground>
 
-                        <ctrls:PackIcon.Triggers>
-                            <EventTrigger RoutedEvent="ButtonBase.MouseEnter">
+                        <Control.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
                                 <BeginStoryboard>
                                     <Storyboard options:Freeze="True">
                                         <ColorAnimation
@@ -27,7 +27,7 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
-                            <EventTrigger RoutedEvent="ButtonBase.MouseLeave">
+                            <EventTrigger RoutedEvent="MouseLeave">
                                 <BeginStoryboard>
                                     <Storyboard options:Freeze="True">
                                         <ColorAnimation
@@ -40,7 +40,7 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
-                        </ctrls:PackIcon.Triggers>
+                        </Control.Triggers>
                     </ctrls:PackIcon>
 
                     <ControlTemplate.Triggers>

@@ -49,7 +49,7 @@
         </DockPanel>
 
         <zex:TabControlEx>
-            <TabItem Header="ToggleButtons">
+            <TabItem Header="Toggle">
                 <ItemsControl ItemsSource="{Binding IconPairs}">
                     <ItemsControl.Resources>
                         <Style TargetType="{x:Type ctrls:ToggleIconButton}">
@@ -76,7 +76,34 @@
                 </ItemsControl>
             </TabItem>
 
-            <TabItem Header="RepeatButtons">
+            <TabItem Header="Check">
+                <ItemsControl ItemsSource="{Binding Icons}">
+                    <ItemsControl.Resources>
+                        <Style TargetType="{x:Type ctrls:IconCheckBox}">
+                            <Setter Property="Command" Value="{Binding DataContext.SingleClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
+                            <Setter Property="CommandParameter" Value="{Binding Kind, RelativeSource={RelativeSource Self}}" />
+                            <Setter Property="InactiveBrush" Value="{StaticResource ButtonInactiveBrush}" />
+                            <Setter Property="ActiveBrush" Value="{StaticResource ButtonActiveBrush}" />
+                            <Setter Property="ClickBrush" Value="{StaticResource ButtonClickBrush}" />
+                            <Setter Property="OpacityRatio" Value="0.7" />
+                        </Style>
+                    </ItemsControl.Resources>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ctrls:IconCheckBox IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Kind="{Binding .}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </TabItem>
+
+            <TabItem Header="Repeat">
                 <ItemsControl ItemsSource="{Binding Icons}">
                     <ItemsControl.Resources>
                         <Style TargetType="{x:Type ctrls:RepeatIconButton}">
@@ -106,7 +133,7 @@
                 </ItemsControl>
             </TabItem>
 
-            <TabItem Header="Buttons">
+            <TabItem Header="Button">
                 <ItemsControl ItemsSource="{Binding Icons}">
                     <ItemsControl.Resources>
                         <Style TargetType="{x:Type ctrls:IconButton}">
@@ -135,7 +162,7 @@
                 </ItemsControl>
             </TabItem>
 
-            <TabItem Header="Icons">
+            <TabItem Header="Icon">
                 <ItemsControl ItemsSource="{Binding Icons}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
