@@ -7,7 +7,9 @@ namespace WpfButtonIcon.Controls;
 
 public sealed class ToggleIconButton : ToggleButton
 {
-    const float DefaultOpacityRatio = IconButtonUtils.DefaultOpacityRatio;
+    sealed record CheckedProps(PackIconKind IconKind, Color MouseOverColor, Brush ActiveBrush);
+    CheckedProps? _offProps;
+    CheckedProps? _onProps;
 
     static ToggleIconButton()
     {
@@ -15,19 +17,68 @@ public sealed class ToggleIconButton : ToggleButton
     }
 
     public ToggleIconButton()
-    { }
+    {
+        // Checked 変化時の処理を（ライブラリ導入なしの）xaml で実装できなかったのでコードビハインドで対応しました。
+        Initialized += ToggleIconButton_Initialized;
+        Checked += ToggleIconButton_Checked;
+        Unchecked += ToggleIconButton_Unchecked;
+    }
+
+    static void ToggleIconButton_Initialized(object? sender, EventArgs e)
+    {
+        static void initProps(ToggleIconButton self)
+        {
+            (PackIconKind iconOff, PackIconKind iconOn) = PackIconPair.GetKinds(self.KindPair);
+            Color clickColor = self.ClickBrush.Color;
+            float checkedMouseOverOpacityRatio = self.OpacityRatio;
+
+            Color checkedMouseOverColor = IconButtonUtils.GetOpacityChangedColor(clickColor, checkedMouseOverOpacityRatio);
+            Color uncheckedMouseOverColor = IconButtonUtils.GetOpacityChangedColor(checkedMouseOverColor, checkedMouseOverOpacityRatio);  // apply Ratio twice.
+            Color checkedActiveColor = uncheckedMouseOverColor;   // 揃える
+            SolidColorBrush checkedActiveBrush = new(checkedActiveColor);
+            checkedActiveBrush.Freeze();
+
+            self._offProps = new CheckedProps(iconOff, uncheckedMouseOverColor, self.ActiveBrush);
+            self._onProps = new CheckedProps(iconOn, checkedMouseOverColor, checkedActiveBrush);
+            self.MouseOverColor = checkedMouseOverColor;
+        }
+
+        if (sender is ToggleIconButton self)
+        {
+            self.Initialized -= ToggleIconButton_Initialized;
+            initProps(self);
+            OnIsCheckedPropertyChanged(self);
+        }
+    }
+
+    static void ToggleIconButton_Checked(object sender, RoutedEventArgs e)
+    {
+        if (sender is ToggleIconButton self)
+            OnIsCheckedPropertyChanged(self);
+    }
+
+    static void ToggleIconButton_Unchecked(object sender, RoutedEventArgs e)
+    {
+        if (sender is ToggleIconButton self)
+            OnIsCheckedPropertyChanged(self);
+    }
+
+    static void OnIsCheckedPropertyChanged(ToggleIconButton self)
+    {
+        CheckedProps? props = (self.IsChecked ?? false) ? self._onProps : self._offProps;
+        if (props is not null)
+        {
+            self.Kind = props.IconKind;
+            self.MouseOverColor = props.MouseOverColor;
+            self.ActiveBrush = props.ActiveBrush;
+        }
+    }
 
     /// <summary>
     /// IconKindPair
     /// </summary>
     public static readonly DependencyProperty KindPairProperty =
-        DependencyProperty.Register(nameof(KindPair), typeof(PackIconKindPair), typeof(ToggleIconButton),
-            new UIPropertyMetadata(PackIconPair.BoxedDefaultKindPair,
-                static (d, e) =>
-                {
-                    if (d is ToggleIconButton self && e.NewValue is PackIconKindPair pair)
-                        (self.OffKind, self.OnKind) = PackIconPair.GetKinds(pair);
-                }));
+        DependencyProperty.Register(nameof(KindPair), typeof(PackIconKindPair), typeof(ToggleIconButton), new PropertyMetadata(PackIconPair.BoxedDefaultKindPair));
     public PackIconKindPair KindPair
     {
         get => (PackIconKindPair)GetValue(KindPairProperty);
@@ -35,27 +86,15 @@ public sealed class ToggleIconButton : ToggleButton
     }
 
     /// <summary>
-    /// OffKind (ReadOnlyDependencyProperty)
+    /// Kind (ReadOnlyDependencyProperty)
     /// </summary>
-    private static readonly DependencyPropertyKey OffKindPropertyKey =
-        DependencyProperty.RegisterReadOnly(nameof(OffKind), typeof(PackIconKind), typeof(ToggleIconButton), new PropertyMetadata(PackIconPair.BoxedDefaultKindOff));
-    public static readonly DependencyProperty OffKindProperty = OffKindPropertyKey.DependencyProperty;
-    public PackIconKind OffKind
+    private static readonly DependencyPropertyKey KindPropertyKey =
+        DependencyProperty.RegisterReadOnly(nameof(Kind), typeof(PackIconKind), typeof(ToggleIconButton), new PropertyMetadata(PackIcon.BoxedDefaultKind));
+    public static readonly DependencyProperty KindProperty = KindPropertyKey.DependencyProperty;
+    public PackIconKind Kind
     {
-        get => (PackIconKind)GetValue(OffKindProperty);
-        private set => SetValue(OffKindPropertyKey, value);
-    }
-
-    /// <summary>
-    /// OnKind (ReadOnlyDependencyProperty)
-    /// </summary>
-    private static readonly DependencyPropertyKey OnKindPropertyKey =
-        DependencyProperty.RegisterReadOnly(nameof(OnKind), typeof(PackIconKind), typeof(ToggleIconButton), new PropertyMetadata(PackIconPair.BoxedDefaultKindOn));
-    public static readonly DependencyProperty OnKindProperty = OnKindPropertyKey.DependencyProperty;
-    public PackIconKind OnKind
-    {
-        get => (PackIconKind)GetValue(OnKindProperty);
-        private set => SetValue(OnKindPropertyKey, value);
+        get => (PackIconKind)GetValue(KindProperty);
+        private set => SetValue(KindPropertyKey, value);
     }
 
     /// <summary>
@@ -84,13 +123,7 @@ public sealed class ToggleIconButton : ToggleButton
     /// ClickBrush
     /// </summary>
     public static readonly DependencyProperty ClickBrushProperty =
-        DependencyProperty.Register(nameof(ClickBrush), typeof(SolidColorBrush), typeof(ToggleIconButton),
-            new UIPropertyMetadata(Brushes.Green,
-                static (d, e) =>
-                {
-                    if (d is ToggleIconButton self && e.NewValue is SolidColorBrush brush)
-                        self.MouseOverColor = IconButtonUtils.GetMouseOverColor(brush.Color, self.OpacityRatio);
-                }));
+        DependencyProperty.Register(nameof(ClickBrush), typeof(SolidColorBrush), typeof(ToggleIconButton), new PropertyMetadata(Brushes.Green));
     public SolidColorBrush ClickBrush
     {
         get => (SolidColorBrush)GetValue(ClickBrushProperty);
@@ -101,13 +134,7 @@ public sealed class ToggleIconButton : ToggleButton
     /// OpacityRatio
     /// </summary>
     public static readonly DependencyProperty OpacityRatioProperty =
-        DependencyProperty.Register(nameof(OpacityRatio), typeof(float), typeof(ToggleIconButton),
-            new FrameworkPropertyMetadata(DefaultOpacityRatio,
-                static (d, e) =>
-                {
-                    if (d is ToggleIconButton self && e.NewValue is float opacityRatio)
-                        self.MouseOverColor = IconButtonUtils.GetMouseOverColor(self.ClickBrush.Color, opacityRatio);
-                }));
+        DependencyProperty.Register(nameof(OpacityRatio), typeof(float), typeof(ToggleIconButton), new PropertyMetadata(IconButtonUtils.BoxedDefaultOpacityRatio));
     public float OpacityRatio
 
     {

@@ -5,9 +5,10 @@ namespace WpfButtonIcon.Controls;
 
 internal static class IconButtonUtils
 {
-    internal const float DefaultOpacityRatio = 0.7f;
+    const float DefaultOpacityRatio = 0.7f;
+    internal static readonly object BoxedDefaultOpacityRatio = DefaultOpacityRatio;
 
-    internal static Color GetMouseOverColor(Color color, float opacityRatio) => new()
+    internal static Color GetOpacityChangedColor(Color color, float opacityRatio) => new()
     {
         A = (byte)Math.Clamp(color.A * opacityRatio, 0, 0xff),
         R = color.R,

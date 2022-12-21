@@ -120,7 +120,7 @@ public sealed class PackIcon : PackIconBase<PackIconKind>
     public PackIcon() : base(CreateIconData)
     { }
 
-    public static readonly object BoxedDefaultKind = PackIconKind.Happy;
+    internal static readonly object BoxedDefaultKind = PackIconKind.Happy;
 
     static IDictionary<PackIconKind, string> CreateIconData() => new Dictionary<PackIconKind, string>
     {

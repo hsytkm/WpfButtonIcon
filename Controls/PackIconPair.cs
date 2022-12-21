@@ -10,11 +10,9 @@ public enum PackIconKindPair
     FileRotate,
 }
 
-public static class PackIconPair
+internal static class PackIconPair
 {
-    public static readonly object BoxedDefaultKindPair = PackIconKindPair.Face;
-    public static readonly object BoxedDefaultKindOff = PackIconKind.Sad;
-    public static readonly object BoxedDefaultKindOn = PackIconKind.Happy;
+    internal static readonly object BoxedDefaultKindPair = PackIconKindPair.Face;
 
     static readonly Dictionary<PackIconKindPair, (PackIconKind Off, PackIconKind On)> _kinds = new()
     {
@@ -25,5 +23,5 @@ public static class PackIconPair
 
     };
 
-    public static (PackIconKind Off, PackIconKind On) GetKinds(PackIconKindPair key) => _kinds[key];
+    internal static (PackIconKind Off, PackIconKind On) GetKinds(PackIconKindPair key) => _kinds[key];
 }

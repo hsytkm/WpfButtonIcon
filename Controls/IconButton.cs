@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -8,8 +7,6 @@ namespace WpfButtonIcon.Controls;
 
 public sealed class IconButton : Button
 {
-    const float DefaultOpacityRatio = IconButtonUtils.DefaultOpacityRatio;
-
     static IconButton()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(IconButton), new FrameworkPropertyMetadata(typeof(IconButton)));
@@ -56,11 +53,10 @@ public sealed class IconButton : Button
     /// </summary>
     public static readonly DependencyProperty ClickBrushProperty =
         DependencyProperty.Register(nameof(ClickBrush), typeof(SolidColorBrush), typeof(IconButton),
-            new UIPropertyMetadata(Brushes.Green,
-                static (d, e) =>
+            new PropertyMetadata(Brushes.Green, static (d, e) =>
                 {
                     if (d is IconButton self && e.NewValue is SolidColorBrush brush)
-                        self.MouseOverColor = IconButtonUtils.GetMouseOverColor(brush.Color, self.OpacityRatio);
+                        self.MouseOverColor = IconButtonUtils.GetOpacityChangedColor(brush.Color, self.OpacityRatio);
                 }));
     public SolidColorBrush ClickBrush
     {
@@ -73,11 +69,10 @@ public sealed class IconButton : Button
     /// </summary>
     public static readonly DependencyProperty OpacityRatioProperty =
         DependencyProperty.Register(nameof(OpacityRatio), typeof(float), typeof(IconButton),
-            new FrameworkPropertyMetadata(DefaultOpacityRatio,
-                static (d, e) =>
+            new PropertyMetadata(IconButtonUtils.BoxedDefaultOpacityRatio, static (d, e) =>
                 {
                     if (d is IconButton self && e.NewValue is float opacityRatio)
-                        self.MouseOverColor = IconButtonUtils.GetMouseOverColor(self.ClickBrush.Color, opacityRatio);
+                        self.MouseOverColor = IconButtonUtils.GetOpacityChangedColor(self.ClickBrush.Color, opacityRatio);
                 }));
     public float OpacityRatio
 
@@ -103,7 +98,7 @@ public sealed class IconButton : Button
     /// </summary>
     public static readonly DependencyProperty DoubleClickCommandProperty =
         DependencyProperty.Register(nameof(DoubleClickCommand), typeof(ICommand), typeof(IconButton),
-            new UIPropertyMetadata(null, (d, e) =>
+            new PropertyMetadata(null, static (d, e) =>
             {
                 if (d is IconButton button && e.NewValue is ICommand command)
                 {

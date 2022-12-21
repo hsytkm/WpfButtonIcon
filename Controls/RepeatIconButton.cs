@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
@@ -7,8 +6,6 @@ namespace WpfButtonIcon.Controls;
 
 public sealed class RepeatIconButton : RepeatButton
 {
-    const float DefaultOpacityRatio = IconButtonUtils.DefaultOpacityRatio;
-
     static RepeatIconButton()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(RepeatIconButton), new FrameworkPropertyMetadata(typeof(RepeatIconButton)));
@@ -55,11 +52,10 @@ public sealed class RepeatIconButton : RepeatButton
     /// </summary>
     public static readonly DependencyProperty ClickBrushProperty =
         DependencyProperty.Register(nameof(ClickBrush), typeof(SolidColorBrush), typeof(RepeatIconButton),
-            new UIPropertyMetadata(Brushes.Green,
-                static (d, e) =>
+            new PropertyMetadata(Brushes.Green, static (d, e) =>
                 {
                     if (d is RepeatIconButton self && e.NewValue is SolidColorBrush brush)
-                        self.MouseOverColor = IconButtonUtils.GetMouseOverColor(brush.Color, self.OpacityRatio);
+                        self.MouseOverColor = IconButtonUtils.GetOpacityChangedColor(brush.Color, self.OpacityRatio);
                 }));
     public SolidColorBrush ClickBrush
     {
@@ -72,11 +68,10 @@ public sealed class RepeatIconButton : RepeatButton
     /// </summary>
     public static readonly DependencyProperty OpacityRatioProperty =
         DependencyProperty.Register(nameof(OpacityRatio), typeof(float), typeof(RepeatIconButton),
-            new FrameworkPropertyMetadata(DefaultOpacityRatio,
-                static (d, e) =>
+            new PropertyMetadata(IconButtonUtils.BoxedDefaultOpacityRatio, static (d, e) =>
                 {
                     if (d is RepeatIconButton self && e.NewValue is float opacityRatio)
-                        self.MouseOverColor = IconButtonUtils.GetMouseOverColor(self.ClickBrush.Color, opacityRatio);
+                        self.MouseOverColor = IconButtonUtils.GetOpacityChangedColor(self.ClickBrush.Color, opacityRatio);
                 }));
     public float OpacityRatio
 
