@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace WpfButtonIcon.Controls;
 
-public sealed class RepeatIconButton : RepeatButton
+public sealed class RepeatIconButton : RepeatButton, IAnimatableIconButton
 {
     static RepeatIconButton()
     {
@@ -18,10 +18,10 @@ public sealed class RepeatIconButton : RepeatButton
     /// IconKind
     /// </summary>
     public static readonly DependencyProperty KindProperty =
-        DependencyProperty.Register(nameof(Kind), typeof(object), typeof(RepeatIconButton), new PropertyMetadata(PackIcon.BoxedDefaultKind));
-    public object Kind
+        DependencyProperty.Register(nameof(Kind), typeof(PackIconKind), typeof(RepeatIconButton), new PropertyMetadata(PackIcon.BoxedDefaultKind));
+    public PackIconKind Kind
     {
-        get => (object)GetValue(KindProperty);
+        get => (PackIconKind)GetValue(KindProperty);
         set => SetValue(KindProperty, value);
     }
 

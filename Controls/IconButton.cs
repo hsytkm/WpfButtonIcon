@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace WpfButtonIcon.Controls;
 
-public sealed class IconButton : Button
+public sealed class IconButton : Button, IAnimatableIconButton
 {
     static IconButton()
     {
@@ -19,10 +19,10 @@ public sealed class IconButton : Button
     /// IconKind
     /// </summary>
     public static readonly DependencyProperty KindProperty =
-        DependencyProperty.Register(nameof(Kind), typeof(object), typeof(IconButton), new PropertyMetadata(PackIcon.BoxedDefaultKind));
-    public object Kind
+        DependencyProperty.Register(nameof(Kind), typeof(PackIconKind), typeof(IconButton), new PropertyMetadata(PackIcon.BoxedDefaultKind));
+    public PackIconKind Kind
     {
-        get => (object)GetValue(KindProperty);
+        get => (PackIconKind)GetValue(KindProperty);
         set => SetValue(KindProperty, value);
     }
 

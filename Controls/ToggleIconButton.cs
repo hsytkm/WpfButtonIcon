@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace WpfButtonIcon.Controls;
 
-public sealed class ToggleIconButton : ToggleButton
+public sealed class ToggleIconButton : ToggleButton, IAnimatableIconButton
 {
     sealed record CheckedProps(PackIconKind IconKind, Color MouseOverColor, Brush ActiveBrush);
     CheckedProps? _offProps;

@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace WpfButtonIcon.Controls;
 
-public sealed class IconCheckBox : ToggleButton
+public sealed class IconCheckBox : ToggleButton, IAnimatableIconButton
 {
     static IconCheckBox()
     {
@@ -18,10 +18,10 @@ public sealed class IconCheckBox : ToggleButton
     /// IconKind
     /// </summary>
     public static readonly DependencyProperty KindProperty =
-        DependencyProperty.Register(nameof(Kind), typeof(object), typeof(IconCheckBox), new PropertyMetadata(PackIcon.BoxedDefaultKind));
-    public object Kind
+        DependencyProperty.Register(nameof(Kind), typeof(PackIconKind), typeof(IconCheckBox), new PropertyMetadata(PackIcon.BoxedDefaultKind));
+    public PackIconKind Kind
     {
-        get => (object)GetValue(KindProperty);
+        get => (PackIconKind)GetValue(KindProperty);
         set => SetValue(KindProperty, value);
     }
 

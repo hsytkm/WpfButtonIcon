@@ -10,7 +10,7 @@
     xmlns:zex="clr-namespace:ControlzEx.Controls;assembly=ControlzEx"
     Title="WpfButtonIcon"
     Width="500"
-    Height="300"
+    Height="350"
     d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
     ResizeMode="CanResizeWithGrip"
     mc:Ignorable="d">
