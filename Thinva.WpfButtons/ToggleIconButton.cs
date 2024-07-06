@@ -1,9 +1,8 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
-namespace WpfButtonIcon.Controls;
+namespace Thinva.WpfButtons;
 
 public sealed class ToggleIconButton : ToggleButton, IAnimatableIconButton
 {
@@ -65,7 +64,7 @@ public sealed class ToggleIconButton : ToggleButton, IAnimatableIconButton
 
     static void OnIsCheckedPropertyChanged(ToggleIconButton self)
     {
-        CheckedProps? props = (self.IsChecked ?? false) ? self._onProps : self._offProps;
+        CheckedProps? props = self.IsChecked ?? false ? self._onProps : self._offProps;
         if (props is not null)
         {
             self.Kind = props.IconKind;

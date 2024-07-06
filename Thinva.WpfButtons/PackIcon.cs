@@ -1,8 +1,7 @@
 ﻿using ControlzEx;
-using System.Collections.Generic;
 using System.Windows;
 
-namespace WpfButtonIcon.Controls;
+namespace Thinva.WpfButtons;
 
 public enum PackIconKind
 {

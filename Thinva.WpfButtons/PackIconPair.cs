@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace WpfButtonIcon.Controls;
+﻿namespace Thinva.WpfButtons;
 
 public enum PackIconKindPair
 {

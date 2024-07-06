@@ -1,25 +1,24 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
-namespace WpfButtonIcon.Controls;
+namespace Thinva.WpfButtons;
 
-public sealed class IconButton : Button, IAnimatableIconButton
+public sealed class RepeatIconButton : RepeatButton, IAnimatableIconButton
 {
-    static IconButton()
+    static RepeatIconButton()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(IconButton), new FrameworkPropertyMetadata(typeof(IconButton)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(RepeatIconButton), new FrameworkPropertyMetadata(typeof(RepeatIconButton)));
     }
 
-    public IconButton()
+    public RepeatIconButton()
     { }
 
     /// <summary>
     /// IconKind
     /// </summary>
     public static readonly DependencyProperty KindProperty =
-        DependencyProperty.Register(nameof(Kind), typeof(PackIconKind), typeof(IconButton), new PropertyMetadata(PackIcon.BoxedDefaultKind));
+        DependencyProperty.Register(nameof(Kind), typeof(PackIconKind), typeof(RepeatIconButton), new PropertyMetadata(PackIcon.BoxedDefaultKind));
     public PackIconKind Kind
     {
         get => (PackIconKind)GetValue(KindProperty);
@@ -30,7 +29,7 @@ public sealed class IconButton : Button, IAnimatableIconButton
     /// InactiveBrush
     /// </summary>
     public static readonly DependencyProperty InactiveBrushProperty =
-        DependencyProperty.Register(nameof(InactiveBrush), typeof(Brush), typeof(IconButton), new PropertyMetadata(Brushes.Red));
+        DependencyProperty.Register(nameof(InactiveBrush), typeof(Brush), typeof(RepeatIconButton), new PropertyMetadata(Brushes.Red));
     public Brush InactiveBrush
     {
         get => (Brush)GetValue(InactiveBrushProperty);
@@ -41,7 +40,7 @@ public sealed class IconButton : Button, IAnimatableIconButton
     /// ActiveBrush
     /// </summary>
     public static readonly DependencyProperty ActiveBrushProperty =
-        DependencyProperty.Register(nameof(ActiveBrush), typeof(Brush), typeof(IconButton), new PropertyMetadata(Brushes.Blue));
+        DependencyProperty.Register(nameof(ActiveBrush), typeof(Brush), typeof(RepeatIconButton), new PropertyMetadata(Brushes.Blue));
     public Brush ActiveBrush
     {
         get => (Brush)GetValue(ActiveBrushProperty);
@@ -52,10 +51,10 @@ public sealed class IconButton : Button, IAnimatableIconButton
     /// ClickBrush
     /// </summary>
     public static readonly DependencyProperty ClickBrushProperty =
-        DependencyProperty.Register(nameof(ClickBrush), typeof(SolidColorBrush), typeof(IconButton),
+        DependencyProperty.Register(nameof(ClickBrush), typeof(SolidColorBrush), typeof(RepeatIconButton),
             new PropertyMetadata(Brushes.Green, static (d, e) =>
                 {
-                    if (d is IconButton self && e.NewValue is SolidColorBrush brush)
+                    if (d is RepeatIconButton self && e.NewValue is SolidColorBrush brush)
                         self.MouseOverColor = IconButtonUtils.GetOpacityChangedColor(brush.Color, self.OpacityRatio);
                 }));
     public SolidColorBrush ClickBrush
@@ -68,10 +67,10 @@ public sealed class IconButton : Button, IAnimatableIconButton
     /// OpacityRatio
     /// </summary>
     public static readonly DependencyProperty OpacityRatioProperty =
-        DependencyProperty.Register(nameof(OpacityRatio), typeof(float), typeof(IconButton),
+        DependencyProperty.Register(nameof(OpacityRatio), typeof(float), typeof(RepeatIconButton),
             new PropertyMetadata(IconButtonUtils.BoxedDefaultOpacityRatio, static (d, e) =>
                 {
-                    if (d is IconButton self && e.NewValue is float opacityRatio)
+                    if (d is RepeatIconButton self && e.NewValue is float opacityRatio)
                         self.MouseOverColor = IconButtonUtils.GetOpacityChangedColor(self.ClickBrush.Color, opacityRatio);
                 }));
     public float OpacityRatio
@@ -85,30 +84,11 @@ public sealed class IconButton : Button, IAnimatableIconButton
     /// MouseOverColor (ReadOnlyDependencyProperty)
     /// </summary>
     private static readonly DependencyPropertyKey MouseOverColorPropertyKey =
-        DependencyProperty.RegisterReadOnly(nameof(MouseOverColor), typeof(Color), typeof(IconButton), new PropertyMetadata(Colors.Yellow));
+        DependencyProperty.RegisterReadOnly(nameof(MouseOverColor), typeof(Color), typeof(RepeatIconButton), new PropertyMetadata(Colors.Yellow));
     public static readonly DependencyProperty MouseOverColorProperty = MouseOverColorPropertyKey.DependencyProperty;
     public Color MouseOverColor
     {
         get => (Color)GetValue(MouseOverColorProperty);
         private set => SetValue(MouseOverColorPropertyKey, value);
-    }
-
-    /// <summary>
-    /// DoubleClickCommand
-    /// </summary>
-    public static readonly DependencyProperty DoubleClickCommandProperty =
-        DependencyProperty.Register(nameof(DoubleClickCommand), typeof(ICommand), typeof(IconButton),
-            new PropertyMetadata(null, static (d, e) =>
-            {
-                if (d is IconButton button && e.NewValue is ICommand command)
-                {
-                    MouseBinding mouseBinding = new(command, new MouseGesture(MouseAction.LeftDoubleClick));
-                    button.InputBindings.Add(mouseBinding);
-                }
-            }));
-    public ICommand? DoubleClickCommand
-    {
-        get => (ICommand?)GetValue(DoubleClickCommandProperty);
-        set => SetValue(DoubleClickCommandProperty, value);
     }
 }

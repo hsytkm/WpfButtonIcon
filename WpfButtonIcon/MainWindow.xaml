@@ -2,7 +2,7 @@
     x:Class="WpfButtonIcon.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ctrls="clr-namespace:WpfButtonIcon.Controls"
+    xmlns:buttons="clr-namespace:Thinva.WpfButtons;assembly=Thinva.WpfButtons"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WpfButtonIcon"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -20,7 +20,7 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <Style TargetType="{x:Type ctrls:PackIcon}">
+        <Style TargetType="{x:Type buttons:PackIcon}">
             <Setter Property="Width" Value="32" />
             <Setter Property="Height" Value="32" />
         </Style>
@@ -40,6 +40,9 @@
 
     <DockPanel>
         <DockPanel Margin="5" DockPanel.Dock="Top">
+            <!--  Enum値のBindingの例  -->
+            <buttons:PackIcon DockPanel.Dock="Left" Kind="{x:Static buttons:PackIconKind.Happy}" />
+
             <CheckBox
                 VerticalContentAlignment="Center"
                 Content="Button.IsEnable"
@@ -52,7 +55,7 @@
             <TabItem Header="Toggle">
                 <ItemsControl ItemsSource="{Binding IconPairs}">
                     <ItemsControl.Resources>
-                        <Style TargetType="{x:Type ctrls:ToggleIconButton}">
+                        <Style TargetType="{x:Type buttons:ToggleIconButton}">
                             <Setter Property="Command" Value="{Binding DataContext.SingleClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
                             <Setter Property="CommandParameter" Value="{Binding KindPair, RelativeSource={RelativeSource Self}}" />
                             <Setter Property="InactiveBrush" Value="{StaticResource ButtonInactiveBrush}" />
@@ -64,7 +67,7 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <ctrls:ToggleIconButton IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" KindPair="{Binding .}" />
+                            <buttons:ToggleIconButton IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" KindPair="{Binding .}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
@@ -79,7 +82,7 @@
             <TabItem Header="Check">
                 <ItemsControl ItemsSource="{Binding Icons}">
                     <ItemsControl.Resources>
-                        <Style TargetType="{x:Type ctrls:IconCheckBox}">
+                        <Style TargetType="{x:Type buttons:IconCheckBox}">
                             <Setter Property="Command" Value="{Binding DataContext.SingleClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
                             <Setter Property="CommandParameter" Value="{Binding Kind, RelativeSource={RelativeSource Self}}" />
                             <Setter Property="InactiveBrush" Value="{StaticResource ButtonInactiveBrush}" />
@@ -91,7 +94,7 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <ctrls:IconCheckBox IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Kind="{Binding .}" />
+                            <buttons:IconCheckBox IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Kind="{Binding .}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
@@ -106,7 +109,7 @@
             <TabItem Header="Repeat">
                 <ItemsControl ItemsSource="{Binding Icons}">
                     <ItemsControl.Resources>
-                        <Style TargetType="{x:Type ctrls:RepeatIconButton}">
+                        <Style TargetType="{x:Type buttons:RepeatIconButton}">
                             <Setter Property="Command" Value="{Binding DataContext.SingleClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
                             <Setter Property="CommandParameter" Value="{Binding Kind, RelativeSource={RelativeSource Self}}" />
                             <Setter Property="InactiveBrush" Value="{StaticResource ButtonInactiveBrush}" />
@@ -121,7 +124,7 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <ctrls:RepeatIconButton IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Kind="{Binding .}" />
+                            <buttons:RepeatIconButton IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Kind="{Binding .}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
@@ -136,7 +139,7 @@
             <TabItem Header="Button">
                 <ItemsControl ItemsSource="{Binding Icons}">
                     <ItemsControl.Resources>
-                        <Style TargetType="{x:Type ctrls:IconButton}">
+                        <Style TargetType="{x:Type buttons:IconButton}">
                             <Setter Property="Command" Value="{Binding DataContext.SingleClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
                             <Setter Property="CommandParameter" Value="{Binding Kind, RelativeSource={RelativeSource Self}}" />
                             <Setter Property="InactiveBrush" Value="{StaticResource ButtonInactiveBrush}" />
@@ -150,7 +153,7 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <ctrls:IconButton IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Kind="{Binding .}" />
+                            <buttons:IconButton IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Kind="{Binding .}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
@@ -166,7 +169,7 @@
                 <ItemsControl ItemsSource="{Binding Icons}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <ctrls:PackIcon Kind="{Binding .}" />
+                            <buttons:PackIcon Kind="{Binding .}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 

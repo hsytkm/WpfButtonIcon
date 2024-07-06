@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Thinva.WpfButtons;component/Themes/IconButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Thinva.WpfButtons;component/Themes/IconCheckBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Thinva.WpfButtons;component/Themes/PackIcon.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Thinva.WpfButtons;component/Themes/RepeatIconButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Thinva.WpfButtons;component/Themes/ToggleIconButton.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

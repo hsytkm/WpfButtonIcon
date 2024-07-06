@@ -1,7 +1,6 @@
-﻿using System;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
-namespace WpfButtonIcon.Controls;
+namespace Thinva.WpfButtons;
 
 internal static class IconButtonUtils
 {

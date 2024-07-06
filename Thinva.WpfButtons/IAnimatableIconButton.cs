@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 
-namespace WpfButtonIcon.Controls;
+namespace Thinva.WpfButtons;
 
-internal interface IAnimatableIconButton
+public interface IAnimatableIconButton
 {
     /// <summary>
     /// Icon
