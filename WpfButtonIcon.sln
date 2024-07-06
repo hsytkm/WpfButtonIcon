@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfButtonIcon", "WpfButtonIcon.csproj", "{256FE77A-8527-4A4F-8510-CA582B6D4B6F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfButtonIcon", "WpfButtonIcon/WpfButtonIcon.csproj", "{256FE77A-8527-4A4F-8510-CA582B6D4B6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
