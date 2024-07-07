@@ -67,7 +67,10 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <buttons:ToggleIconButton IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" KindPair="{Binding .}" />
+                            <buttons:ToggleIconButton
+                                IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                KindPair="{Binding .}"
+                                ToolTip="{Binding .}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
@@ -94,7 +97,10 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <buttons:IconCheckBox IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Kind="{Binding .}" />
+                            <buttons:IconCheckBox
+                                IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                Kind="{Binding .}"
+                                ToolTip="{Binding .}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
@@ -124,7 +130,10 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <buttons:RepeatIconButton IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Kind="{Binding .}" />
+                            <buttons:RepeatIconButton
+                                IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                Kind="{Binding .}"
+                                ToolTip="{Binding .}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
@@ -153,7 +162,10 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <buttons:IconButton IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Kind="{Binding .}" />
+                            <buttons:IconButton
+                                IsEnabled="{Binding DataContext.EnableButton, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                Kind="{Binding .}"
+                                ToolTip="{Binding .}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 

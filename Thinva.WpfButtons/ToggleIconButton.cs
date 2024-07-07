@@ -28,15 +28,22 @@ public sealed class ToggleIconButton : ToggleButton, IAnimatableIconButton
         static void initProps(ToggleIconButton self)
         {
             (PackIconKind iconOff, PackIconKind iconOn) = PackIconPair.GetKinds(self.KindPair);
-            Color clickColor = self.ClickBrush.Color;
+
+#if true    // Hcov3をみてええ感じにチューニングしてみました
+            if (self.ClickBrush is not SolidColorBrush clickBrush)
+                return;
+
+            Color checkedMouseOverColor = clickBrush.Color;
+            Color uncheckedMouseOverColor = clickBrush.Color;
+            SolidColorBrush checkedActiveBrush = clickBrush;
+#else
             float checkedMouseOverOpacityRatio = self.OpacityRatio;
-
-            Color checkedMouseOverColor = IconButtonUtils.GetOpacityChangedColor(clickColor, checkedMouseOverOpacityRatio);
+            Color clickColor = (self.ClickBrush as SolidColorBrush)?.Color ?? Colors.Red;
+            Color checkedMouseOverColor = clickColor;
             Color uncheckedMouseOverColor = IconButtonUtils.GetOpacityChangedColor(checkedMouseOverColor, checkedMouseOverOpacityRatio);  // apply Ratio twice.
-            Color checkedActiveColor = uncheckedMouseOverColor;   // 揃える
-            SolidColorBrush checkedActiveBrush = new(checkedActiveColor);
+            SolidColorBrush checkedActiveBrush = new(uncheckedMouseOverColor);
             checkedActiveBrush.Freeze();
-
+#endif
             self._offProps = new CheckedProps(iconOff, uncheckedMouseOverColor, self.ActiveBrush);
             self._onProps = new CheckedProps(iconOn, checkedMouseOverColor, checkedActiveBrush);
             self.MouseOverColor = checkedMouseOverColor;
@@ -122,10 +129,10 @@ public sealed class ToggleIconButton : ToggleButton, IAnimatableIconButton
     /// ClickBrush
     /// </summary>
     public static readonly DependencyProperty ClickBrushProperty =
-        DependencyProperty.Register(nameof(ClickBrush), typeof(SolidColorBrush), typeof(ToggleIconButton), new PropertyMetadata(Brushes.Green));
-    public SolidColorBrush ClickBrush
+        DependencyProperty.Register(nameof(ClickBrush), typeof(Brush), typeof(ToggleIconButton), new PropertyMetadata(Brushes.Green));
+    public Brush ClickBrush
     {
-        get => (SolidColorBrush)GetValue(ClickBrushProperty);
+        get => (Brush)GetValue(ClickBrushProperty);
         set => SetValue(ClickBrushProperty, value);
     }
 

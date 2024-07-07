@@ -26,7 +26,7 @@ public interface IAnimatableIconButton
     /// ClickBrush
     /// </summary>
     static readonly DependencyProperty ClickBrushProperty = default!;
-    SolidColorBrush ClickBrush { get; set; }
+    Brush ClickBrush { get; set; }
 
     /// <summary>
     /// OpacityRatio

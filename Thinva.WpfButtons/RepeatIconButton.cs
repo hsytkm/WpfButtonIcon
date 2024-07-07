@@ -51,15 +51,15 @@ public sealed class RepeatIconButton : RepeatButton, IAnimatableIconButton
     /// ClickBrush
     /// </summary>
     public static readonly DependencyProperty ClickBrushProperty =
-        DependencyProperty.Register(nameof(ClickBrush), typeof(SolidColorBrush), typeof(RepeatIconButton),
+        DependencyProperty.Register(nameof(ClickBrush), typeof(Brush), typeof(RepeatIconButton),
             new PropertyMetadata(Brushes.Green, static (d, e) =>
                 {
                     if (d is RepeatIconButton self && e.NewValue is SolidColorBrush brush)
                         self.MouseOverColor = IconButtonUtils.GetOpacityChangedColor(brush.Color, self.OpacityRatio);
                 }));
-    public SolidColorBrush ClickBrush
+    public Brush ClickBrush
     {
-        get => (SolidColorBrush)GetValue(ClickBrushProperty);
+        get => (Brush)GetValue(ClickBrushProperty);
         set => SetValue(ClickBrushProperty, value);
     }
 
@@ -71,7 +71,8 @@ public sealed class RepeatIconButton : RepeatButton, IAnimatableIconButton
             new PropertyMetadata(IconButtonUtils.BoxedDefaultOpacityRatio, static (d, e) =>
                 {
                     if (d is RepeatIconButton self && e.NewValue is float opacityRatio)
-                        self.MouseOverColor = IconButtonUtils.GetOpacityChangedColor(self.ClickBrush.Color, opacityRatio);
+                        if (self.ClickBrush is SolidColorBrush brush)
+                            self.MouseOverColor = IconButtonUtils.GetOpacityChangedColor(brush.Color, opacityRatio);
                 }));
     public float OpacityRatio
 

@@ -8,7 +8,7 @@
     <Nullable>enable</Nullable>
 
     <Description>My own secret buttons</Description>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>thinva</Authors>
     <PackageProjectUrl>https://github.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/</RepositoryUrl>
