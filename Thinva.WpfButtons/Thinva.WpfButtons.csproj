@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFrameworks>net8.0-windows;net9.0-windows</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <Description>My own secret buttons</Description>
-    <Version>0.1.1</Version>
+    <Version>0.1.2</Version>
     <Authors>thinva</Authors>
     <PackageProjectUrl>https://github.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/</RepositoryUrl>
@@ -35,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ControlzEx" Version="5.0.2" />
+    <PackageReference Include="ControlzEx" Version="6.0.0" />
   </ItemGroup>
 
 </Project>
